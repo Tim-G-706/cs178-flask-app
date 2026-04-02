@@ -33,13 +33,13 @@
             <tbody> <!-- table body -- loop through all of the restaurants -->
                 {% for result in results %}
                 <tr>
-                    <td>{{ result[0] }}</td>
-                    <td>{{ result[1] }}</td>
-                    <td>{{ result[2] }}</td>
-                    <td>{{ result[3] }}</td>
-                    <td>{{ result[4] }}</td>
-                    <td>{{ result[5] }}</td>
-                    <td>{{ result[6] }}</td>
+                    <td>{{ result.name }}</td>
+                    <td>{{ result.cuisine }}</td>
+                    <td>{{ result.city }}</td>
+                    <td>{{ result.state }}</td>
+                    <td>{{ result.price_level }}</td>
+                    <td>{{ result.has_visited }}</td>
+                    <td>{{ result.notes }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
