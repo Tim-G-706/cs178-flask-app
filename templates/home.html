@@ -30,16 +30,16 @@
                     <th>Notes</th>
                 </tr>
             </thead>
-            <tbody> <!-- table body -- loop through all of the users -->
-                {% for user in users %}
+            <tbody> <!-- table body -- loop through all of the restaurants -->
+                {% for result in results %}
                 <tr>
-                    <td>{{ user[0] }}</td>
-                    <td>{{ user[1] }}</td>
-                    <td>{{ user[2] }}</td>
-                    <td>{{ user[3] }}</td>
-                    <td>{{ user[4] }}</td>
-                    <td>{{ user[5] }}</td>
-                    <td>{{ user[6] }}</td>
+                    <td>{{ result[0] }}</td>
+                    <td>{{ result[1] }}</td>
+                    <td>{{ result[2] }}</td>
+                    <td>{{ result[3] }}</td>
+                    <td>{{ result[4] }}</td>
+                    <td>{{ result[5] }}</td>
+                    <td>{{ result[6] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
