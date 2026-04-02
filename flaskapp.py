@@ -13,7 +13,7 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
 
 @app.route('/')
 def home():
-    restaurants = execute_query("SELECT * FROM Restaurants ");
+    restaurants = execute_query("SELECT * FROM restaurants ");
     return render_template('home.html', results = restaurants)
 
 @app.route('/add-user', methods=['GET', 'POST'])
