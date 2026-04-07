@@ -56,7 +56,7 @@ def add_visit():
 
         # Final structured object
         visit = {
-            "restaurant_name": restaurant_name,
+            "Restaurant": restaurant_name,
             "total_spent": total_spent,
             "rating": rating,
             "people": people_list
