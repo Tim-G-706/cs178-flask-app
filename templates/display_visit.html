@@ -11,7 +11,7 @@
 
     <!-- Search Form -->
     <form method="GET" action="/display-visit">
-        <select class="form-control" name="Restaurant">
+        <select class="form-control" name="Restaurant" onchange="this.form.submit()">
             <option value="">Select a restaurant</option>
             {% for r in restaurant_names %}
                 <option value="{{ r }}" {% if r == Restaurant %}selected{% endif %}>
