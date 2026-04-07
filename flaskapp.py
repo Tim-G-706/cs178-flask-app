@@ -93,6 +93,7 @@ def delete_user():
 @app.route('/display-visit', methods=['GET', 'POST'])
 def display_visit():
     # Extract form data
+    name = ""
     if request.method == 'POST':
         name = request.form['name']
     return render_template('display_visit.html', restuarant = name)
