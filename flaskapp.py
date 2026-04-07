@@ -66,7 +66,7 @@ def add_visit():
 
         #Save to DynamoDB
         table.put_item(Item=visit)
-        execute_query("UPDATE restaurants SET has_visited = 1 WHERE restaurant_id = %s", restaurant_name);
+        execute_query("UPDATE restaurants SET has_visited = 1 WHERE name = %s", (restaurant_name,));
         
         flash('Visit added successfully! Huzzah!', 'success')  # 'success' is a category; makes a green banner at the top
         # Redirect to home page or another page upon successful submission
@@ -102,10 +102,9 @@ def display_visit():
     restaurant_names = list(set(item['Restaurant'] for item in all_items))
     visits = []
     if selected_name:
-        visits = [
-            item for item in all_items
-            if item['Restaurant'] == selected_name
-        ]
+        for item in all_items:
+            if item['Restaurant'] == selected_name:
+                visits.append(item)
     return render_template('display_visit.html', Restaurant = selected_name, visits = visits, restaurant_names = restaurant_names)
 
 
