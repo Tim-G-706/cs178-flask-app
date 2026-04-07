@@ -11,12 +11,14 @@
 
     <!-- Search Form -->
     <form method="GET" action="/display-visit">
-        <div class="form-group">
-            <label for="Restaurant">Restaurant Name</label>
-            <input type="text" class="form-control" name="Restaurant" id="Restaurant"
-                   placeholder="Enter restaurant name" value="{{ Restaurant | default('') }}">
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <select class="form-control" name="Restaurant">
+            <option value="">Select a restaurant</option>
+            {% for r in restaurant_names %}
+                <option value="{{ r }}" {% if r == Restaurant %}selected{% endif %}>
+                    {{ r }}
+                </option>
+            {% endfor %}
+        </select>
     </form>
 
     {% if visits %}

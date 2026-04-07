@@ -22,7 +22,7 @@ def home():
 @app.route('/add-visit', methods=['GET', 'POST'])
 def add_visit():
     if request.method == 'POST':
-        restaurant_name = request.form.get('restaurant_name').lower()
+        restaurant_name = request.form.get('restaurant_name')
         total_spent = request.form.get('total_spent')
         rating = request.form.get('rating')
 
@@ -93,17 +93,18 @@ def delete_user():
 
 @app.route('/display-visit', methods=['GET', 'POST'])
 def display_visit():
-    # Extract form data
+    selected_name = request.args.get('Restaurant', '')
+
+    response = table.scan()
+    all_items = response.get('Items', [])
+    restaurant_names = list(set(item['restaurant_name'] for item in all_items))
     visits = []
-    name = ""
-    if request.method == 'GET':
-        name = request.args.get('Restaurant').strip().lower()
-        if name:
-            response = table.scan(
-                FilterExpression=Attr('restaurant_name').eq(name)
-            )
-            visits = response.get('Items', [])
-    return render_template('display_visit.html', Restaurant = name, visits = visits)
+    if selected_name:
+        visits = [
+            item for item in all_items
+            if item['restaurant_name'] == selected_name
+        ]
+    return render_template('display_visit.html', Restaurant = selected_name, visits = visits, restaurant_names = restaurant_names)
 
 
 # these two lines of code should always be the last in the file
