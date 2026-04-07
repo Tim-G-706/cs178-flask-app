@@ -4,6 +4,7 @@
 
 import re
 from collections import defaultdict
+from boto3.dynamodb.conditions import Attr
 from flask import Flask
 from flask import render_template
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -93,10 +94,16 @@ def delete_user():
 @app.route('/display-visit', methods=['GET', 'POST'])
 def display_visit():
     # Extract form data
+    visits = []
     name = ""
     if request.method == 'GET':
-        name = request.form['Restaurant']
-    return render_template('display_visit.html', Restaurant = name)
+        name = request.args.get['Restaurant']
+        if name:
+            response = table.scan(
+                FilterExpression=Attr('restaurant_name').eq(name)
+            )
+            visits = response.get('Items', [])
+    return render_template('display_visit.html', Restaurant = name, visits = visits)
 
 
 # these two lines of code should always be the last in the file
