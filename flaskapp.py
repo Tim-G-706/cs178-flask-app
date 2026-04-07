@@ -4,6 +4,7 @@
 
 import re
 from collections import defaultdict
+from datetime import datetime
 from boto3.dynamodb.conditions import Attr
 from flask import Flask
 from flask import render_template
@@ -59,6 +60,7 @@ def add_visit():
         # Final structured object
         visit = {
             "Restaurant": restaurant_name,
+            "VisitID": datetime.now.strftime("%Y-%m-%d %H:%M:%S"), 
             "total_spent": total_spent,
             "rating": rating,
             "people": people_list
