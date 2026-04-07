@@ -2,6 +2,8 @@
 # description: Flask example using redirect, url_for, and flash
 # credit: the template html files were constructed with the help of ChatGPT
 
+import re
+from collections import defaultdict
 from flask import Flask
 from flask import render_template
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -16,24 +18,59 @@ def home():
     restaurants = execute_query("SELECT * FROM restaurants ");
     return render_template('home.html', results = restaurants)
 
-@app.route('/add-user', methods=['GET', 'POST'])
-def add_user():
+@app.route('/add-visit', methods=['GET', 'POST'])
+def add_visit():
     if request.method == 'POST':
-        # Extract form data
-        fname = request.form['fname']
-        lname = request.form['lname']
-        genre = request.form['genre']
+        restaurant_name = request.form.get('restaurant_name')
+        total_spent = request.form.get('total_spent')
+        rating = request.form.get('rating')
+
+        #The following function was generated with help from ChatGPT
+        #Since apparently the NoSQL data output from the html is stored in strings
+        #and getting indexes and values from within a string is very confusing
+        people = defaultdict(lambda: {"items": []})
+
+        for key, value in request.form.items():
+
+            # Match: people[0][name]
+            name_match = re.match(r'people\[(\d+)\]\[name\]', key)
+            if name_match:
+                p_idx = int(name_match.group(1))
+                people[p_idx]["name"] = value
+
+            # Match: people[0][items][0][item_name]
+            item_match = re.match(r'people\[(\d+)\]\[items\]\[(\d+)\]\[(.+)\]', key)
+            if item_match:
+                p_idx = int(item_match.group(1))
+                i_idx = int(item_match.group(2))
+                field = item_match.group(3)
+
+                # Ensure item exists
+                while len(people[p_idx]["items"]) <= i_idx:
+                    people[p_idx]["items"].append({})
+
+                people[p_idx]["items"][i_idx][field] = value
+
+        # Convert dict → ordered list
+        people_list = [people[i] for i in sorted(people.keys())]
+
+        # Final structured object
+        visit = {
+            "restaurant_name": restaurant_name,
+            "total_spent": total_spent,
+            "rating": rating,
+            "people": people_list
+        }
+
+        #Save to DynamoDB
+        table.put_item(Item=visit)
         
-        # Process the data (e.g., add it to a database)
-        # For now, let's just print it to the console
-        print("Name:", fname, lname, ":", "Favorite Genre:", genre)
-        
-        flash('User added successfully! Huzzah!', 'success')  # 'success' is a category; makes a green banner at the top
+        flash('Visit added successfully! Huzzah!', 'success')  # 'success' is a category; makes a green banner at the top
         # Redirect to home page or another page upon successful submission
         return redirect(url_for('home'))
     else:
         # Render the form page if the request method is GET
-        return render_template('add_user.html')
+        return render_template('add_visit.html')
 
 @app.route('/delete-user',methods=['GET', 'POST'])
 def delete_user():
@@ -53,12 +90,12 @@ def delete_user():
         return render_template('delete_user.html')
 
 
-@app.route('/display-users')
-def display_users():
-    # hard code a value to the users_list;
-    # note that this could have been a result from an SQL query :) 
-    users_list = (('John','Doe','Comedy'),('Jane', 'Doe','Drama'))
-    return render_template('display_users.html', users = users_list)
+@app.route('/display-visit', methods=['GET', 'POST'])
+def display_visit():
+    # Extract form data
+    if request.method == 'POST':
+        name = request.form['name']
+    return render_template('display_visit.html', restuarant = name)
 
 
 # these two lines of code should always be the last in the file

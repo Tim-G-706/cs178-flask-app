@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Visits</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>View Visits</h2>
+
+    <!-- Search Form -->
+    <form method="GET" action="/visits">
+        <div class="form-group">
+            <label for="restaurant_name">Restaurant Name</label>
+            <input type="text" class="form-control" name="restaurant_name" id="restaurant_name"
+                   placeholder="Enter restaurant name" value="{{ restaurant_name | default('') }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    {% if visits %}
+        <h3 class="mt-4">Visits for "{{ restaurant_name }}"</h3>
+        {% for visit in visits %}
+            <div class="card mt-3">
+                <div class="card-body">
+                    <p><strong>Total Spent:</strong> ${{ visit.total_spent }}</p>
+                    <p><strong>Visit Time:</strong> {{ visit.visit_timestamp }}</p>
+                    <h5>People:</h5>
+                    <ul>
+                        {% for person in visit.people %}
+                            <li>
+                                <strong>{{ person.name }}</strong>
+                                <ul>
+                                    {% for item in person.items %}
+                                        <li>{{ item.item_name }} — Rating: {{ item.rating }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    {% elif restaurant_name %}
+        <p class="mt-3 text-danger">No visits found for "{{ restaurant_name }}"</p>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -4,6 +4,11 @@
 
 import pymysql
 import creds
+import boto3
+
+# boto3 uses the credentials configured via `aws configure` on EC2
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+table = dynamodb.Table('ProjectOne')
 
 def get_conn():
     """Returns a connection to the MySQL RDS instance."""
