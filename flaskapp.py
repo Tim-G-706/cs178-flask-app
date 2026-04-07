@@ -97,7 +97,7 @@ def display_visit():
     visits = []
     name = ""
     if request.method == 'GET':
-        name = request.args.get['Restaurant']
+        name = request.args.get('Restaurant')
         if name:
             response = table.scan(
                 FilterExpression=Attr('restaurant_name').eq(name)
