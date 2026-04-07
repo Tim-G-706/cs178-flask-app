@@ -97,12 +97,12 @@ def display_visit():
 
     response = table.scan()
     all_items = response.get('Items', [])
-    restaurant_names = list(set(item['restaurant_name'] for item in all_items))
+    restaurant_names = list(set(item['Restaurant'] for item in all_items))
     visits = []
     if selected_name:
         visits = [
             item for item in all_items
-            if item['restaurant_name'] == selected_name
+            if item['Restaurant'] == selected_name
         ]
     return render_template('display_visit.html', Restaurant = selected_name, visits = visits, restaurant_names = restaurant_names)
 
