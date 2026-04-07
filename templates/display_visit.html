@@ -11,6 +11,9 @@
 
     <!-- Search Form -->
     <form method="GET" action="/display-visit">
+        <!--  The following function was generated with help from ChatGPT because I don't really understand HTML 
+        # and I wanted to be able to have a drop down selection menu
+        -->
         <select class="form-control" name="Restaurant" onchange="this.form.submit()">
             <option value="">Select a restaurant</option>
             {% for r in restaurant_names %}
@@ -34,7 +37,7 @@
                             <li>
                                 <strong>{{ person.name }}</strong>
                                 <ul>
-                                    {% for item in person.items %}
+                                    {% for item in person["items"] %}
                                         <li>{{ item.item_name }} — Rating: {{ item.rating }}</li>
                                     {% endfor %}
                                 </ul>
