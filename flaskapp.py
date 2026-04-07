@@ -21,6 +21,18 @@ def home():
     restaurants = execute_query("SELECT * FROM restaurants ");
     return render_template('home.html', results = restaurants)
 
+@app.route('/view-menu', methods=['GET', 'POST'])
+def view_menu():
+    selected_name = request.args.get('Restaurant', '')
+    menu = execute_query(
+    "SELECT restaurants.name, menu_items.item_name, menu_items.price "
+    "FROM menu_items "
+    "JOIN restaurants ON menu_items.restaurant_id = restaurants.restaurant_id "
+    "WHERE r.name = %s",
+    (selected_name,)
+    )
+    return render_template('view_menu.html', results = menu)
+
 @app.route('/add-visit', methods=['GET', 'POST'])
 def add_visit():
     if request.method == 'POST':

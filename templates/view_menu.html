@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Visits</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>View Visits</h2>
+
+    <!-- Search Form -->
+    <form method="GET" action="/display-menu">
+        <!--  The following function was generated with help from ChatGPT because I don't really understand HTML 
+        # and I wanted to be able to have a drop down selection menu
+        -->
+        <select class="form-control" name="Restaurant" onchange="this.form.submit()">
+            <option value="">Select a restaurant</option>
+            {% for r in restaurant_names %}
+                <option value="{{ r }}" {% if r == Restaurant %}selected{% endif %}>
+                    {{ r }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+   <h2 class="mt-5">Restaurant List</h2>
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="thead-dark"> <!-- creates a dark background for the table header -->
+                <tr>
+                    <th>Name</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody> <!-- table body -- loop through all of the restaurants -->
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.name }}</td>
+                    <td>{{ result.item_name }}</td>
+                    <td>{{ result.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <!-- Home Button -->
+    <a href="/" class="btn btn-info">Back To Home</a>
+</div>
+</body>
+</html>
