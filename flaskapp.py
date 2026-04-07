@@ -94,9 +94,9 @@ def delete_user():
 def display_visit():
     # Extract form data
     name = ""
-    if request.method == 'POST':
-        name = request.form['name']
-    return render_template('display_visit.html', restuarant = name)
+    if request.method == 'GET':
+        name = request.form['Restaurant']
+    return render_template('display_visit.html', Restaurant = name)
 
 
 # these two lines of code should always be the last in the file
