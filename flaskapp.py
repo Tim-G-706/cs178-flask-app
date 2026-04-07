@@ -14,6 +14,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
                                    # it is required, but you can leave this alone
 
+
 @app.route('/')
 def home():
     restaurants = execute_query("SELECT * FROM restaurants ");
@@ -65,6 +66,7 @@ def add_visit():
 
         #Save to DynamoDB
         table.put_item(Item=visit)
+        execute_query("UPDATE restaurants SET has_visited = 1 WHERE restaurant_id = %s", restaurant_name);
         
         flash('Visit added successfully! Huzzah!', 'success')  # 'success' is a category; makes a green banner at the top
         # Redirect to home page or another page upon successful submission
