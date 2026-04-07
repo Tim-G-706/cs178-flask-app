@@ -28,7 +28,7 @@ def view_menu():
     "SELECT restaurants.name, menu_items.item_name, menu_items.price "
     "FROM menu_items "
     "JOIN restaurants ON menu_items.restaurant_id = restaurants.restaurant_id "
-    "WHERE r.name = %s",
+    "WHERE restaurants.name = %s",
     (selected_name,)
     )
     return render_template('view_menu.html', results = menu)
