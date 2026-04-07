@@ -22,7 +22,7 @@ def home():
 @app.route('/add-visit', methods=['GET', 'POST'])
 def add_visit():
     if request.method == 'POST':
-        restaurant_name = request.form.get('restaurant_name')
+        restaurant_name = request.form.get('restaurant_name').lower()
         total_spent = request.form.get('total_spent')
         rating = request.form.get('rating')
 
@@ -97,7 +97,7 @@ def display_visit():
     visits = []
     name = ""
     if request.method == 'GET':
-        name = request.args.get('Restaurant')
+        name = request.args.get('Restaurant').strip().lower()
         if name:
             response = table.scan(
                 FilterExpression=Attr('restaurant_name').eq(name)
