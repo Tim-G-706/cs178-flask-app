@@ -60,7 +60,7 @@ def add_visit():
         # Final structured object
         visit = {
             "Restaurant": restaurant_name,
-            "VisitID": datetime.now.strftime("%Y-%m-%d %H:%M:%S"), 
+            "VisitID": str(datetime.now()), 
             "total_spent": total_spent,
             "rating": rating,
             "people": people_list
