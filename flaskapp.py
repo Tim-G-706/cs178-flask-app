@@ -98,11 +98,8 @@ def add_visit():
 def delete_user():
     if request.method == 'POST':
         # Extract form data
-        name = request.form['name']
+        notes = request.form['notes']
         
-        # Process the data (e.g., add it to a database)
-        # For now, let's just print it to the console
-        print("Name to delete:", name)
         
         flash('User deleted successfully! Hoorah!', 'warning') 
         # Redirect to home page or another page upon successful submission
@@ -111,6 +108,24 @@ def delete_user():
         # Render the form page if the request method is GET
         return render_template('delete_user.html')
 
+@app.route('/update-notes', methods=['GET', 'POST'])
+def view_menu():
+    selected_name = request.args.get('Restaurant', '')
+    restaurant_names = execute_query(
+    "SELECT DISTINCT restaurants.name "
+    "FROM restaurants "
+    )
+    if request.method == 'POST':
+        # Extract form data
+        notes = request.form['notes']
+        execute_update("UPDATE restaurants SET notes %s WHERE name = %s", (notes, selected_name,))
+        
+        flash('User deleted successfully! Hoorah!', 'warning') 
+        # Redirect to home page or another page upon successful submission
+        return redirect(url_for('home'))
+    else:
+        # Render the form page if the request method is GET
+        return render_template('update_notes.html', restaurant_names = restaurant_names)
 
 @app.route('/display-visit', methods=['GET', 'POST'])
 def display_visit():

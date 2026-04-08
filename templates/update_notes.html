@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurant Visits</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>View Visits</h2>
+
+    <!-- Search Form -->
+    <form method="GET" action="/update-notes">
+        <!--  The following function was generated with help from ChatGPT because I don't really understand HTML 
+        # and I wanted to be able to have a drop down selection menu
+        -->
+        <select class="form-control" name="Restaurant" onchange="this.form.submit()">
+            <option value="">Select a restaurant</option>
+            {% for r in restaurant_names %}
+                <option value="{{ r.name }}">{{ r.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <form method="POST" action="/update-notes">
+        <input type="text" notes="notes" placeholder="Notes">
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>
