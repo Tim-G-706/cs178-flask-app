@@ -14,7 +14,7 @@
         <!--  The following function was generated with help from ChatGPT because I don't really understand HTML 
         # and I wanted to be able to have a drop down selection menu
         -->
-        <select class="form-control" name="Restaurant" onchange="this.form.submit()">
+        <select class="form-control" name="Restaurant">
             <option value="">Select a restaurant</option>
             {% for r in restaurant_names %}
                 <option value="{{ r.name }}">{{ r.name }}</option>
