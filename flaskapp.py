@@ -94,19 +94,23 @@ def add_visit():
         # Render the form page if the request method is GET
         return render_template('add_visit.html')
 
-@app.route('/delete-user',methods=['GET', 'POST'])
-def delete_user():
+@app.route('/delete-restaurant',methods=['GET', 'POST'])
+def delete_restaurant():
+    restaurant_names = execute_query(
+    "SELECT DISTINCT restaurants.name "
+    "FROM restaurants "
+    )
     if request.method == 'POST':
         # Extract form data
-        notes = request.form['notes']
+        selected_name = request.form.get('Restaurant', '').strip()
+        execute_update("DELETE FROM restaurants WHERE name = %s", (selected_name,))
         
-        
-        flash('User deleted successfully! Hoorah!', 'warning') 
+        flash(f"Deleted {selected_name}", "success")
         # Redirect to home page or another page upon successful submission
         return redirect(url_for('home'))
     else:
         # Render the form page if the request method is GET
-        return render_template('delete_user.html')
+        return render_template('delete_restaurant.html', restaurant_names = restaurant_names)
 
 @app.route('/update-notes', methods=['GET', 'POST'])
 def update_notes():
