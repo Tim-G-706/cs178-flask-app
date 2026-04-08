@@ -118,6 +118,7 @@ def update_notes():
     if request.method == 'POST':
         # Extract form data
         notes = request.form.get('notes', '')
+        selected_name = request.args.get('Restaurant', '').strip()
         execute_update("UPDATE restaurants SET notes = %s WHERE name = %s", (notes, selected_name,))
         
         flash(f"Updated notes to '{notes}' for {selected_name}", "success")
