@@ -122,6 +122,8 @@ def update_notes():
         
         flash('Note Updated successfully! Hoorah!', 'warning') 
         # Redirect to home page or another page upon successful submission
+        print("Selected:", selected_name)
+        print("Notes:", notes)
         return redirect(url_for('home'))
     else:
         # Render the form page if the request method is GET
