@@ -145,6 +145,26 @@ def display_visit():
                 visits.append(item)
     return render_template('display_visit.html', Restaurant = selected_name, visits = visits, restaurant_names = restaurant_names)
 
+@app.route('/add-restaurant', methods=['GET', 'POST'])
+def add_restaurant():
+    if request.method == 'POST':
+        name = request.form['name']
+        cuisine = request.form['cuisine']
+        city = request.form['city']
+        state = request.form['state']
+        price = request.form['price']
+        notes = request.form['notes']
+
+        execute_update("INSERT INTO restaurants (name, cuisine, city, state, price_level, has_visited, notes)"
+        "VALUES (%s, %s, %s, %s, %s, 0, %s);", (name, cuisine, city, state, price, notes))
+        flash(f"Added {name}", "success")
+        # Redirect to home page or another page upon successful submission
+        return redirect(url_for('home'))
+    else:
+        # Render the form page if the request method is GET
+        return render_template('add_restaurant.html')
+
+    
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':
