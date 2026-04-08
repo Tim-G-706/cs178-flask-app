@@ -109,7 +109,7 @@ def delete_user():
         return render_template('delete_user.html')
 
 @app.route('/update-notes', methods=['GET', 'POST'])
-def view_menu():
+def update_notes():
     selected_name = request.args.get('Restaurant', '')
     restaurant_names = execute_query(
     "SELECT DISTINCT restaurants.name "
