@@ -117,8 +117,8 @@ def update_notes():
     )
     if request.method == 'POST':
         # Extract form data
-        notes = request.form['notes']
-        execute_update("UPDATE restaurants SET notes %s WHERE name = %s", (notes, selected_name,))
+        notes = request.form.get('notes', '')
+        execute_update("UPDATE restaurants SET notes = %s WHERE name = %s", (notes, selected_name,))
         
         flash('User deleted successfully! Hoorah!', 'warning') 
         # Redirect to home page or another page upon successful submission
