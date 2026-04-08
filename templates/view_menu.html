@@ -17,7 +17,7 @@
         <select class="form-control" name="Restaurant" onchange="this.form.submit()">
             <option value="">Select a restaurant</option>
             {% for r in restaurant_names %}
-                <option value="{{ r }}" {% if r == Restaurant %}selected{% endif %}>
+                <option value="{{ r }}" {% if r.name == Restaurant %}selected{% endif %}>
                     {{ r }}
                 </option>
             {% endfor %}
