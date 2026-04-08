@@ -120,10 +120,8 @@ def update_notes():
         notes = request.form.get('notes', '')
         execute_update("UPDATE restaurants SET notes = %s WHERE name = %s", (notes, selected_name,))
         
-        flash('Note Updated successfully! Hoorah!', 'warning') 
+        flash("UPDATE restaurants SET notes = %s WHERE name = %s", (notes, selected_name,)) 
         # Redirect to home page or another page upon successful submission
-        print("Selected:", selected_name)
-        print("Notes:", notes)
         return redirect(url_for('home'))
     else:
         # Render the form page if the request method is GET
