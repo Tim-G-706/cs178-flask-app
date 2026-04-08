@@ -110,7 +110,7 @@ def delete_user():
 
 @app.route('/update-notes', methods=['GET', 'POST'])
 def update_notes():
-    selected_name = request.args.get('Restaurant', '')
+    selected_name = request.form.get('Restaurant', '').strip()
     restaurant_names = execute_query(
     "SELECT DISTINCT restaurants.name "
     "FROM restaurants "
@@ -120,7 +120,7 @@ def update_notes():
         notes = request.form.get('notes', '')
         execute_update("UPDATE restaurants SET notes = %s WHERE name = %s", (notes, selected_name,))
         
-        flash('User deleted successfully! Hoorah!', 'warning') 
+        flash('Note Updated successfully! Hoorah!', 'warning') 
         # Redirect to home page or another page upon successful submission
         return redirect(url_for('home'))
     else:
