@@ -25,7 +25,7 @@ def home():
 def view_menu():
     selected_name = request.args.get('Restaurant', '')
     restaurant_names = execute_query(
-    "SELECT restaurants.name "
+    "SELECT DISTINCT restaurants.name "
     "FROM menu_items "
     "JOIN restaurants ON menu_items.restaurant_id = restaurants.restaurant_id "
     )
